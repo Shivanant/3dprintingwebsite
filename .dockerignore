@@ -1,0 +1,10 @@
+.git
+node_modules
+.next
+dist
+tmp
+apps/api/tmp
+apps/api/storage/uploads
+*.log
+.DS_Store
+Thumbs.db

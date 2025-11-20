@@ -1,0 +1,29 @@
+app:
+  env: development
+  port: 8080
+  publicURL: http://localhost:8080
+  frontendURL: http://localhost:3000
+
+database:
+  dsn: postgres://postgres:postgres@db:5433/print_hub?sslmode=disable
+
+jwt:
+  secret: change-me-fadfad
+  accessTTL: 15m
+  refreshTTL: 336h
+
+mailgun:
+  domain: sandbox.example.com
+  apiKey: key-xxxx
+  from: "3DPrint Hub <noreply@example.com>"
+
+oauth:
+  google:
+    clientID: ""
+    clientSecret: ""
+  github:
+    clientID: ""
+    clientSecret: ""
+
+storage:
+  uploadsPath: storage/uploads

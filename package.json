@@ -3,9 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "start": "next start"
+    "dev": "npm run dev:web",
+    "dev:web": "next dev",
+    "dev:web:turbopack": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "dev:api": "cd apps/api && go run ./cmd/api",
+    "dev:api:migrate": "cd apps/api && go run ./cmd/migrate",
+    "dev:api:test": "cd apps/api && go test ./...",
+    "dev:stack:up": "docker compose -f docker-compose.dev.yml up --build",
+    "dev:stack:down": "docker compose -f docker-compose.dev.yml down"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.6",
@@ -29,5 +36,6 @@
     "@types/react-dom": "^19",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "pnpm@10.18.0+sha512.e804f889f1cecc40d572db084eec3e4881739f8dec69c0ff10d2d1beff9a4e309383ba27b5b750059d7f4c149535b6cd0d2cb1ed3aeb739239a4284a68f40cfa"
 }

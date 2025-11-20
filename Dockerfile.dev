@@ -1,0 +1,35 @@
+# syntax=docker/dockerfile:1.6
+
+ARG GO_VERSION=1.24.5
+ARG NODE_VERSION=20
+
+############################
+# Go API development image #
+############################
+FROM golang:${GO_VERSION} AS api-base
+WORKDIR /app
+ENV CGO_ENABLED=1 \
+    GO111MODULE=on
+
+COPY apps/api/go.mod apps/api/go.sum ./
+RUN go mod download
+COPY apps/api ./
+# Pin air to a Go 1.24-compatible release (latest requires Go >= 1.25)
+RUN go install github.com/air-verse/air@v1.62.0
+
+FROM api-base AS api-dev
+CMD ["air", "-c", ".air.toml"]
+
+#############################
+# Next.js web dev image     #
+#############################
+FROM node:${NODE_VERSION}-alpine AS web-base
+WORKDIR /app
+ENV NEXT_TELEMETRY_DISABLED=1
+
+COPY package.json package-lock.json* ./
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
+COPY . .
+
+FROM web-base AS web-dev
+CMD ["npm", "run", "dev", "--", "--hostname", "0.0.0.0"]
